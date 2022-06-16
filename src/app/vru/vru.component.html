@@ -1,0 +1,19 @@
+<!-- 
+    http://w1.c1.rada.gov.ua/pls/radan_gs09/ns_zal_frack
+ -->
+
+<br>
+<br>
+
+<div class="rows">
+    <div *ngFor="let row of rows; index as ri" class="row">
+        <div *ngFor="let seat of seatCells; index as si" 
+            class="seatCell" 
+            [class.seat]="isSeat(ri, si)"
+            (mouseenter)="onSeatMouseEnter(ri, si)"
+            (mouseleave)="onSeatMouseLeave(ri, si)">
+        </div>
+    </div>
+</div>
+
+{{seatDetails}}
