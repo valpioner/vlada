@@ -17,7 +17,8 @@ const routes: Routes = [
   },
   {
     path: 'vru',
-    component: VruComponent,
+    loadChildren: () => import('./vru/vru.module').then(m => m.VruModule)
+    // component: VruComponent,
     // canActivate: [AuthGuard],
     // data: { roles: [Role.Admin] }
   },

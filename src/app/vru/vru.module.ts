@@ -1,15 +1,24 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { VruComponent } from './vru.component';
-import { BrowserModule } from '@angular/platform-browser';
+import { VruRoutingModule } from './vru-routing.module';
+
+import { OverlayModule } from '@angular/cdk/overlay';
+import { PortalModule } from '@angular/cdk/portal';
+import { RowComponent } from './row/row.component';
+import { SeatComponent } from './seat/seat.component';
 
 @NgModule({
   declarations: [
-    VruComponent
+    VruComponent,
+    RowComponent,
+    SeatComponent
   ],
   imports: [
     CommonModule,
-    BrowserModule
+    VruRoutingModule,
+    OverlayModule,
+    PortalModule
   ]
 })
 export class VruModule { }

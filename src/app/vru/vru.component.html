@@ -2,18 +2,23 @@
     http://w1.c1.rada.gov.ua/pls/radan_gs09/ns_zal_frack
  -->
 
-<br>
-<br>
-
 <div class="rows">
-    <div *ngFor="let row of rows; index as ri" class="row">
-        <div *ngFor="let seat of seatCells; index as si" 
-            class="seatCell" 
-            [class.seat]="isSeat(ri, si)"
-            (mouseenter)="onSeatMouseEnter(ri, si)"
-            (mouseleave)="onSeatMouseLeave(ri, si)">
-        </div>
-    </div>
+  <br />
+  <br />
+
+  <row *ngFor="let row of rows; let i = index" [seats]="row.seats"></row>
+
+  <!-- <br /> -->
+
+  <!-- <div #rows *ngFor="let row of uiRows; index as rowIndex" class="row">
+    <div
+      *ngFor="let seat of uiSeats; index as seatIndex"
+      class="seatCell"
+      [class.seat]="isSeat(rowIndex, seatIndex)"
+      (mouseenter)="openOverlay($event)"
+      (mouseleave)="onSeatMouseLeave(rowIndex, seatIndex)"
+    ></div>
+  </div> -->
 </div>
 
-{{seatDetails}}
+{{ seatDetails }}

@@ -1,23 +1,28 @@
+:host {
+  display: flex;
+  justify-content: center;
+}
 
 .rows {
-    display: flex;
-    flex-direction: column;
-    gap: 4px;
-    align-items: center;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  align-items: center;
+  width: calc(45 * 20px); // +4?
 }
 
 .row {
-    display: flex;
-    gap: 4px;
+  display: flex;
+  gap: 4px;
 }
 
 .seatCell {
-    width: 16px;
-    height: 20px;
+  width: 16px;
+  height: 20px;
 }
 
 .seat {
-    background-color: #1AE57F;
-    border-radius: 3px;
-    cursor: pointer;
+  background-color: royalblue;
+  border-radius: 3px;
+  cursor: pointer;
 }

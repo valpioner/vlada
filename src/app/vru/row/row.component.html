@@ -1,0 +1,6 @@
+<seat
+  *ngFor="let seat of seats; let i = index"
+  [seat]="seat"
+  [ngStyle]="{ 'margin-left': getMarginByGap(seat) + 'px' }"
+>
+</seat>
