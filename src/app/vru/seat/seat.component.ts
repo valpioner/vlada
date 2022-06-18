@@ -9,7 +9,7 @@ import {
   OnInit,
   ViewChild,
 } from '@angular/core';
-import { Seat } from '../row/row.component';
+import { ZalSeat } from 'src/app/shared/models/zal-seat';
 
 @Component({
   selector: 'seat',
@@ -21,7 +21,7 @@ export class SeatComponent implements OnInit {
   overlayRef: OverlayRef | null = null;
 
   @Input()
-  seat?: Seat;
+  seat?: ZalSeat;
 
   @ViewChild('overlayTemplate') overlayTemplate!: CdkPortal;
 
@@ -55,9 +55,7 @@ export class SeatComponent implements OnInit {
     const overlayConfig = new OverlayConfig({
       panelClass: 'overlay-panel',
       positionStrategy,
-      // width: 200,
     });
-    // overlayConfig.hasBackdrop = true;
     this.overlayRef = this._overlay.create(overlayConfig);
     this.overlayRef.backdropClick().subscribe(() => {
       this.overlayRef?.dispose();

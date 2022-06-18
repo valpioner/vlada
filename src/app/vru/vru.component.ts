@@ -1,558 +1,120 @@
 import {
-  FlexibleConnectedPositionStrategyOrigin,
-  Overlay,
-  OverlayConfig,
-  OverlayRef,
-} from '@angular/cdk/overlay';
-import { CdkPortal } from '@angular/cdk/portal';
-import {
-  AfterViewInit,
   ChangeDetectionStrategy,
+  ChangeDetectorRef,
   Component,
-  ElementRef,
   OnInit,
-  QueryList,
-  ViewChild,
-  ViewChildren,
 } from '@angular/core';
-import vru from '../../assets/vru.json';
-import { Row } from './row/row.component';
+import { Observable } from 'rxjs';
+import { map, take } from 'rxjs/operators';
 
-const vruSeats = [
-  {
-    seats: [
-      { gap: 18 },
-      { person: { name: 'name' }, gap: 1 },
-      { person: { name: 'Стефанчук Руслан Олексійович' }, gap: 1 },
-      { person: { name: 'name' }, gap: 1 },
-      { gap: 1 },
-    ],
-  },
-  {},
-  {
-    seats: [{ gap: 22 }],
-  },
-  {},
-  {
-    seats: [
-      { gap: 10 },
-      { person: { name: 'name' } },
-      { person: { name: 'name' } },
-      { person: { name: 'name' } },
-      { person: { name: 'name' } },
-      { gap: 3, person: { name: 'name' } },
-      { person: { name: 'name' } },
-      { person: { name: 'name' } },
-      { person: { name: 'name' } },
-      { gap: 1, person: { name: 'name' } },
-      { person: { name: 'name' } },
-      { person: { name: 'name' } },
-      { person: { name: 'name' } },
-      { gap: 3, person: { name: 'name' } },
-      { person: { name: 'name' } },
-      { person: { name: 'name' } },
-      { person: { name: 'name' } },
-      { person: { name: 'name' } },
-    ],
-  },
-  {
-    seats: [
-      { gap: 9 },
-      { person: { name: 'name' } },
-      { person: { name: 'name' } },
-      { person: { name: 'name' } },
-      { person: { name: 'name' } },
-      { gap: 3, person: { name: 'name' } },
-      { person: { name: 'name' } },
-      { person: { name: 'name' } },
-      { person: { name: 'name' } },
-      { person: { name: 'name' } },
-      { gap: 1, person: { name: 'name' } },
-      { person: { name: 'name' } },
-      { person: { name: 'name' } },
-      { person: { name: 'name' } },
-      { person: { name: 'name' } },
-      { gap: 3, person: { name: 'name' } },
-      { person: { name: 'name' } },
-      { person: { name: 'name' } },
-      { person: { name: 'name' } },
-      { person: { name: 'name' } },
-    ],
-  },
-  {
-    seats: [
-      { gap: 6 },
-      { person: { name: 'name' } },
-      { person: { name: 'name' } },
-      { person: { name: 'name' } },
-      { person: { name: 'name' } },
-      { person: { name: 'name' } },
-      { gap: 3, person: { name: 'name' } },
-      { person: { name: 'name' } },
-      { person: { name: 'name' } },
-      { person: { name: 'name' } },
-      { person: { name: 'name' } },
-      { person: { name: 'name' } },
-      { person: { name: 'name' } },
-      { gap: 1, person: { name: 'name' } },
-      { person: { name: 'name' } },
-      { person: { name: 'name' } },
-      { person: { name: 'name' } },
-      { person: { name: 'name' } },
-      { person: { name: 'name' } },
-      { person: { name: 'name' } },
-      { gap: 3, person: { name: 'name' } },
-      { person: { name: 'name' } },
-      { person: { name: 'name' } },
-      { person: { name: 'name' } },
-      { person: { name: 'name' } },
-      { person: { name: 'name' } },
-    ],
-  },
-  {
-    seats: [
-      { gap: 5 },
-      { person: { name: 'name' } },
-      { person: { name: 'name' } },
-      { person: { name: 'name' } },
-      { person: { name: 'name' } },
-      { person: { name: 'name' } },
-      { gap: 3, person: { name: 'name' } },
-      { person: { name: 'name' } },
-      { person: { name: 'name' } },
-      { person: { name: 'name' } },
-      { person: { name: 'name' } },
-      { person: { name: 'name' } },
-      { person: { name: 'name' } },
-      { person: { name: 'name' } },
-      { gap: 1, person: { name: 'name' } },
-      { person: { name: 'name' } },
-      { person: { name: 'name' } },
-      { person: { name: 'name' } },
-      { person: { name: 'name' } },
-      { person: { name: 'name' } },
-      { person: { name: 'name' } },
-      { person: { name: 'name' } },
-      { gap: 3, person: { name: 'name' } },
-      { person: { name: 'name' } },
-      { person: { name: 'name' } },
-      { person: { name: 'name' } },
-      { person: { name: 'name' } },
-      { person: { name: 'name' } },
-    ],
-  },
-  {
-    seats: [
-      { gap: 4 },
-      { person: { name: 'name' } },
-      { person: { name: 'name' } },
-      { person: { name: 'name' } },
-      { person: { name: 'name' } },
-      { person: { name: 'name' } },
-      { gap: 3, person: { name: 'name' } },
-      { person: { name: 'name' } },
-      { person: { name: 'name' } },
-      { person: { name: 'name' } },
-      { person: { name: 'name' } },
-      { person: { name: 'name' } },
-      { person: { name: 'name' } },
-      { person: { name: 'name' } },
-      { person: { name: 'name' } },
-      { gap: 1, person: { name: 'name' } },
-      { person: { name: 'name' } },
-      { person: { name: 'name' } },
-      { person: { name: 'name' } },
-      { person: { name: 'name' } },
-      { person: { name: 'name' } },
-      { person: { name: 'name' } },
-      { person: { name: 'name' } },
-      { person: { name: 'name' } },
-      { gap: 3, person: { name: 'name' } },
-      { person: { name: 'name' } },
-      { person: { name: 'name' } },
-      { person: { name: 'name' } },
-      { person: { name: 'name' } },
-      { person: { name: 'name' } },
-    ],
-  },
-  {
-    seats: [
-      { gap: 2 },
-      { person: { name: 'name' } },
-      { person: { name: 'name' } },
-      { person: { name: 'name' } },
-      { person: { name: 'name' } },
-      { person: { name: 'name' } },
-      { gap: 3, person: { name: 'name' } },
-      { person: { name: 'name' } },
-      { person: { name: 'name' } },
-      { person: { name: 'name' } },
-      { person: { name: 'name' } },
-      { gap: 2, person: { name: 'name' } },
-      { person: { name: 'name' } },
-      { person: { name: 'name' } },
-      { person: { name: 'name' } },
-      { gap: 1, person: { name: 'name' } },
-      { person: { name: 'name' } },
-      { person: { name: 'name' } },
-      { person: { name: 'name' } },
-      { gap: 2, person: { name: 'name' } },
-      { person: { name: 'name' } },
-      { person: { name: 'name' } },
-      { person: { name: 'name' } },
-      { person: { name: 'name' } },
-      { gap: 3, person: { name: 'name' } },
-      { person: { name: 'name' } },
-      { person: { name: 'name' } },
-      { person: { name: 'name' } },
-      { person: { name: 'name' } },
-      { person: { name: 'name' } },
-      { gap: 1, person: { name: 'name' } },
-    ],
-  },
-  {
-    seats: [
-      { gap: 2 },
-      { person: { name: 'name' } },
-      { person: { name: 'name' } },
-      { person: { name: 'name' } },
-      { person: { name: 'name' } },
-      { gap: 2, person: { name: 'name' } },
-      { person: { name: 'name' } },
-      { person: { name: 'name' } },
-      { person: { name: 'name' } },
-      { person: { name: 'name' } },
-      { person: { name: 'name' } },
-      { gap: 2, person: { name: 'name' } },
-      { person: { name: 'name' } },
-      { person: { name: 'name' } },
-      { person: { name: 'name' } },
-      { person: { name: 'name' } },
-      { gap: 1, person: { name: 'name' } },
-      { person: { name: 'name' } },
-      { person: { name: 'name' } },
-      { person: { name: 'name' } },
-      { person: { name: 'name' } },
-      { gap: 2, person: { name: 'name' } },
-      { person: { name: 'name' } },
-      { person: { name: 'name' } },
-      { person: { name: 'name' } },
-      { person: { name: 'name' } },
-      { person: { name: 'name' } },
-      { gap: 2, person: { name: 'name' } },
-      { person: { name: 'name' } },
-      { person: { name: 'name' } },
-      { person: { name: 'name' } },
-      { person: { name: 'name' } },
-      { gap: 1, person: { name: 'name' } },
-    ],
-  },
-  {
-    seats: [
-      { gap: 2 },
-      { person: { name: 'name' } },
-      { person: { name: 'name' } },
-      { gap: 4, person: { name: 'name' } },
-      { person: { name: 'name' } },
-      { person: { name: 'name' } },
-      { person: { name: 'name' } },
-      { person: { name: 'name' } },
-      { person: { name: 'name' } },
-      { gap: 2, person: { name: 'name' } },
-      { person: { name: 'name' } },
-      { person: { name: 'name' } },
-      { person: { name: 'name' } },
-      { person: { name: 'name' } },
-      { gap: 1, person: { name: 'name' } },
-      { person: { name: 'name' } },
-      { person: { name: 'name' } },
-      { person: { name: 'name' } },
-      { person: { name: 'name' } },
-      { gap: 2, person: { name: 'name' } },
-      { person: { name: 'name' } },
-      { person: { name: 'name' } },
-      { person: { name: 'name' } },
-      { person: { name: 'name' } },
-      { person: { name: 'name' } },
-      { gap: 4, person: { name: 'name' } },
-      { person: { name: 'name' } },
-      { person: { name: 'name' } },
-      { gap: 1, person: { name: 'name' } },
-    ],
-  },
-  {
-    seats: [
-      { gap: 2 },
-      { person: { name: 'name' } },
-      { gap: 3, person: { name: 'name' } },
-      { person: { name: 'name' } },
-      { person: { name: 'name' } },
-      { person: { name: 'name' } },
-      { person: { name: 'name' } },
-      { person: { name: 'name' } },
-      { person: { name: 'name' } },
-      { gap: 2, person: { name: 'name' } },
-      { person: { name: 'name' } },
-      { person: { name: 'name' } },
-      { person: { name: 'name' } },
-      { person: { name: 'name' } },
-      { person: { name: 'name' } },
-      { gap: 1, person: { name: 'name' } },
-      { person: { name: 'name' } },
-      { person: { name: 'name' } },
-      { person: { name: 'name' } },
-      { person: { name: 'name' } },
-      { person: { name: 'name' } },
-      { gap: 2, person: { name: 'name' } },
-      { person: { name: 'name' } },
-      { person: { name: 'name' } },
-      { person: { name: 'name' } },
-      { person: { name: 'name' } },
-      { person: { name: 'name' } },
-      { person: { name: 'name' } },
-      { gap: 3, person: { name: 'name' } },
-      { person: { name: 'name' } },
-      { gap: 1, person: { name: 'name' } },
-    ],
-  },
-  {},
-  {
-    seats: [
-      { person: { name: 'name' } },
-      { gap: 5, person: { name: 'name' } },
-      { person: { name: 'name' } },
-      { person: { name: 'name' } },
-      { person: { name: 'name' } },
-      { person: { name: 'name' } },
-      { person: { name: 'name' } },
-      { person: { name: 'name' } },
-      { gap: 2, person: { name: 'name' } },
-      { person: { name: 'name' } },
-      { person: { name: 'name' } },
-      { person: { name: 'name' } },
-      { person: { name: 'name' } },
-      { person: { name: 'name' } },
-      { person: { name: 'name' } },
-      { gap: 1, person: { name: 'name' } },
-      { person: { name: 'name' } },
-      { person: { name: 'name' } },
-      { person: { name: 'name' } },
-      { person: { name: 'name' } },
-      { person: { name: 'name' } },
-      { person: { name: 'name' } },
-      { gap: 2, person: { name: 'name' } },
-      { person: { name: 'name' } },
-      { person: { name: 'name' } },
-      { person: { name: 'name' } },
-      { person: { name: 'name' } },
-      { person: { name: 'name' } },
-      { person: { name: 'name' } },
-      { gap: 5, person: { name: 'name' } },
-    ],
-  },
-  {
-    seats: [
-      { person: { name: 'name' } },
-      { gap: 3, person: { name: 'name' } },
-      { person: { name: 'name' } },
-      { person: { name: 'name' } },
-      { person: { name: 'name' } },
-      { person: { name: 'name' } },
-      { person: { name: 'name' } },
-      { person: { name: 'name' } },
-      { person: { name: 'name' } },
-      { gap: 2, person: { name: 'name' } },
-      { person: { name: 'name' } },
-      { person: { name: 'name' } },
-      { person: { name: 'name' } },
-      { person: { name: 'name' } },
-      { person: { name: 'name' } },
-      { person: { name: 'name' } },
-      { person: { name: 'name' } },
-      { gap: 1, person: { name: 'name' } },
-      { person: { name: 'name' } },
-      { person: { name: 'name' } },
-      { person: { name: 'name' } },
-      { person: { name: 'name' } },
-      { person: { name: 'name' } },
-      { person: { name: 'name' } },
-      { person: { name: 'name' } },
-      { gap: 2, person: { name: 'name' } },
-      { person: { name: 'name' } },
-      { person: { name: 'name' } },
-      { person: { name: 'name' } },
-      { person: { name: 'name' } },
-      { person: { name: 'name' } },
-      { person: { name: 'name' } },
-      { person: { name: 'name' } },
-      { gap: 3, person: { name: 'name' } },
-    ],
-  },
-  {
-    seats: [
-      { person: { name: 'name' } },
-      { gap: 4, person: { name: 'name' } },
-      { person: { name: 'name' } },
-      { person: { name: 'name' } },
-      { person: { name: 'name' } },
-      { person: { name: 'name' } },
-      { person: { name: 'name' } },
-      { person: { name: 'name' } },
-      { gap: 2, person: { name: 'name' } },
-      { person: { name: 'name' } },
-      { person: { name: 'name' } },
-      { person: { name: 'name' } },
-      { person: { name: 'name' } },
-      { person: { name: 'name' } },
-      { person: { name: 'name' } },
-      { person: { name: 'name' } },
-      { gap: 1, person: { name: 'name' } },
-      { person: { name: 'name' } },
-      { person: { name: 'name' } },
-      { person: { name: 'name' } },
-      { person: { name: 'name' } },
-      { person: { name: 'name' } },
-      { person: { name: 'name' } },
-      { person: { name: 'name' } },
-      { gap: 2, person: { name: 'name' } },
-      { person: { name: 'name' } },
-      { person: { name: 'name' } },
-      { person: { name: 'name' } },
-      { person: { name: 'name' } },
-      { person: { name: 'name' } },
-      { person: { name: 'name' } },
-      { gap: 4, person: { name: 'name' } },
-    ],
-  },
-  {
-    seats: [
-      { gap: 5, person: { name: 'name' } },
-      { person: { name: 'name' } },
-      { person: { name: 'name' } },
-      { person: { name: 'name' } },
-      { person: { name: 'name' } },
-      { person: { name: 'name' } },
-      { gap: 2, person: { name: 'name' } },
-      { person: { name: 'name' } },
-      { person: { name: 'name' } },
-      { person: { name: 'name' } },
-      { person: { name: 'name' } },
-      { person: { name: 'name' } },
-      { person: { name: 'name' } },
-      { person: { name: 'name' } },
-      { person: { name: 'name' } },
-      { gap: 1, person: { name: 'name' } },
-      { person: { name: 'name' } },
-      { person: { name: 'name' } },
-      { person: { name: 'name' } },
-      { person: { name: 'name' } },
-      { person: { name: 'name' } },
-      { person: { name: 'name' } },
-      { person: { name: 'name' } },
-      { person: { name: 'name' } },
-      { gap: 2, person: { name: 'name' } },
-      { person: { name: 'name' } },
-      { person: { name: 'name' } },
-      { person: { name: 'name' } },
-      { person: { name: 'name' } },
-      { person: { name: 'name' } },
-      { gap: 4, person: { name: 'name' } },
-    ],
-  },
-  {
-    seats: [
-      { gap: 8, person: { name: 'name' } },
-      { person: { name: 'name' } },
-      { gap: 2, person: { name: 'name' } },
-      { person: { name: 'name' } },
-      { person: { name: 'name' } },
-      { person: { name: 'name' } },
-      { person: { name: 'name' } },
-      { person: { name: 'name' } },
-      { person: { name: 'name' } },
-      { person: { name: 'name' } },
-      { person: { name: 'name' } },
-      { person: { name: 'name' } },
-      { gap: 1, person: { name: 'name' } },
-      { person: { name: 'name' } },
-      { person: { name: 'name' } },
-      { person: { name: 'name' } },
-      { person: { name: 'name' } },
-      { person: { name: 'name' } },
-      { person: { name: 'name' } },
-      { person: { name: 'name' } },
-      { person: { name: 'name' } },
-      { person: { name: 'name' } },
-      { gap: 2, person: { name: 'name' } },
-      { person: { name: 'name' } },
-    ],
-  },
-  {
-    seats: [
-      { gap: 13, person: { name: 'name' } },
-      { person: { name: 'name' } },
-      { person: { name: 'name' } },
-      { person: { name: 'name' } },
-      { person: { name: 'name' } },
-      { person: { name: 'name' } },
-      { person: { name: 'name' } },
-      { person: { name: 'name' } },
-      { person: { name: 'name' } },
-      { gap: 1, person: { name: 'name' } },
-      { person: { name: 'name' } },
-      { person: { name: 'name' } },
-      { person: { name: 'name' } },
-      { person: { name: 'name' } },
-      { person: { name: 'name' } },
-      { person: { name: 'name' } },
-      { person: { name: 'name' } },
-      { person: { name: 'name' } },
-    ],
-  },
-  {
-    seats: [
-      { gap: 4, person: { name: 'name' } },
-      { person: { name: 'name' } },
-      { person: { name: 'name' } },
-      { person: { name: 'name' } },
-      { person: { name: 'name' } },
-      { person: { name: 'name' } },
-      { person: { name: 'name' } },
-      { gap: 24, person: { name: 'name' } },
-      { person: { name: 'name' } },
-      { person: { name: 'name' } },
-      { person: { name: 'name' } },
-      { person: { name: 'name' } },
-      { person: { name: 'name' } },
-      { person: { name: 'name' } },
-    ],
-  },
-  {
-    seats: [
-      { gap: 4, person: { name: 'name' } },
-      { person: { name: 'name' } },
-      { person: { name: 'name' } },
-      { person: { name: 'name' } },
-      { person: { name: 'name' } },
-      { person: { name: 'name' } },
-      { person: { name: 'name' } },
-      { gap: 5, person: { name: 'name' } },
-      { person: { name: 'name' } },
-      { person: { name: 'name' } },
-      { person: { name: 'name' } },
-      { gap: 5, person: { name: 'name' } },
-      { person: { name: 'name' } },
-      { person: { name: 'name' } },
-      { person: { name: 'name' } },
-      { gap: 6, person: { name: 'name' } },
-      { person: { name: 'name' } },
-      { person: { name: 'name' } },
-      { person: { name: 'name' } },
-      { person: { name: 'name' } },
-      { person: { name: 'name' } },
-      { person: { name: 'name' } },
-    ],
-  },
+import { ZalSeat, ZalSeatWithGap } from '../shared/models/zal-seat';
+import { ApiService } from '../shared/services/api.service';
+
+const gaps = [
+  { row: 2, col: 20, gap: 18 },
+  { row: 2, col: 22, gap: 1 },
+  { row: 2, col: 24, gap: 1 },
+  { row: 2, col: 26, gap: 1 },
+  { row: 2, col: 28, gap: 1 },
+
+  { row: 4, col: 24, gap: 22 },
+
+  { row: 6, col: 12, gap: 10 },
+  { row: 6, col: 20, gap: 3 },
+  { row: 6, col: 25, gap: 1 },
+  { row: 6, col: 32, gap: 3 },
+
+  { row: 7, col: 11, gap: 9 },
+  { row: 7, col: 19, gap: 3 },
+  { row: 7, col: 25, gap: 1 },
+  { row: 7, col: 33, gap: 3 },
+
+  { row: 8, col: 8, gap: 6 },
+  { row: 8, col: 17, gap: 3 },
+  { row: 8, col: 25, gap: 1 },
+  { row: 8, col: 35, gap: 3 },
+
+  { row: 9, col: 7, gap: 5 },
+  { row: 9, col: 16, gap: 3 },
+  { row: 9, col: 25, gap: 1 },
+  { row: 9, col: 36, gap: 3 },
+
+  { row: 10, col: 6, gap: 4 },
+  { row: 10, col: 15, gap: 3 },
+  { row: 10, col: 25, gap: 1 },
+  { row: 10, col: 37, gap: 3 },
+
+  { row: 11, col: 4, gap: 2 },
+  { row: 11, col: 13, gap: 3 },
+  { row: 11, col: 20, gap: 2 },
+  { row: 11, col: 25, gap: 1 },
+  { row: 11, col: 31, gap: 2 },
+  { row: 11, col: 39, gap: 3 },
+  { row: 11, col: 46, gap: 1 },
+
+  { row: 12, col: 4, gap: 2 },
+  { row: 12, col: 11, gap: 2 },
+  { row: 12, col: 19, gap: 2 },
+  { row: 12, col: 25, gap: 1 },
+  { row: 12, col: 32, gap: 2 },
+  { row: 12, col: 40, gap: 2 },
+  { row: 12, col: 46, gap: 1 },
+
+  { row: 13, col: 4, gap: 2 },
+  { row: 13, col: 11, gap: 4 },
+  { row: 13, col: 19, gap: 2 },
+  { row: 13, col: 25, gap: 1 },
+  { row: 13, col: 32, gap: 2 },
+  { row: 13, col: 42, gap: 4 },
+  { row: 13, col: 46, gap: 1 },
+
+  { row: 14, col: 4, gap: 2 },
+  { row: 14, col: 9, gap: 3 },
+  { row: 14, col: 18, gap: 2 },
+  { row: 14, col: 25, gap: 1 },
+  { row: 14, col: 33, gap: 2 },
+  { row: 14, col: 43, gap: 3 },
+  { row: 14, col: 46, gap: 1 },
+
+  { row: 16, col: 8, gap: 5 },
+  { row: 16, col: 17, gap: 2 },
+  { row: 16, col: 25, gap: 1 },
+  { row: 16, col: 34, gap: 2 },
+  { row: 16, col: 46, gap: 5 },
+
+  { row: 17, col: 6, gap: 3 },
+  { row: 17, col: 16, gap: 2 },
+  { row: 17, col: 25, gap: 1 },
+  { row: 17, col: 35, gap: 2 },
+  { row: 17, col: 46, gap: 3 },
+
+  { row: 18, col: 7, gap: 4 },
+  { row: 18, col: 16, gap: 2 },
+  { row: 18, col: 25, gap: 1 },
+  { row: 18, col: 35, gap: 2 },
+  { row: 18, col: 46, gap: 4 },
+
+  { row: 19, col: 7, gap: 5 },
+  { row: 19, col: 15, gap: 2 },
+  { row: 19, col: 25, gap: 1 },
+  { row: 19, col: 36, gap: 2 },
+  { row: 19, col: 46, gap: 4 },
+
+  { row: 20, col: 10, gap: 8 },
+  { row: 20, col: 14, gap: 2 },
+  { row: 20, col: 25, gap: 1 },
+  { row: 20, col: 37, gap: 2 },
+
+  { row: 21, col: 15, gap: 13 },
+  { row: 21, col: 25, gap: 1 },
+
+  { row: 22, col: 5, gap: 3 },
+  { row: 22, col: 37, gap: 25 },
+
+  { row: 23, col: 5, gap: 3 },
+  { row: 23, col: 18, gap: 6 },
+  { row: 23, col: 27, gap: 5 },
+  { row: 23, col: 37, gap: 6 },
 ];
 
 @Component({
@@ -561,153 +123,38 @@ const vruSeats = [
   styleUrls: ['./vru.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class VruComponent implements OnInit, AfterViewInit {
-  uiRows = new Array(22);
-  uiSeats = new Array(45);
+export class VruComponent implements OnInit {
+  private _zalSeatsWithGaps$: Observable<ZalSeatWithGap[]>;
+  zalSeatsWithGaps: ZalSeatWithGap[] = [];
 
-  seatDetails = '';
+  constructor(private _api: ApiService, private _cd: ChangeDetectorRef) {
+    this._zalSeatsWithGaps$ = this._api.getZalSeats().pipe(
+      take(1),
+      map((seats) => [
+        ...seats.map((seat) => ({ ...seat, gap: this._getGap(seat) })),
+      ])
+    );
 
-  rows: Row[] = vruSeats;
-
-  // seats = [
-  //   // [18, 20, 22, 24, 26],
-  //   // [],
-  //   // [22],
-  //   // [],
-  //   // [
-  //   //   [10, 14],
-  //   //   [18, 21],
-  //   //   [23, 26],
-  //   //   [30, 34],
-  //   // ],
-  //   // [
-  //   //   [9, 13],
-  //   //   [17, 21],
-  //   //   [23, 27],
-  //   //   [31, 35],
-  //   // ],
-  //   // [
-  //   //   [6, 11],
-  //   //   [15, 21],
-  //   //   [23, 29],
-  //   //   [33, 38],
-  //   // ],
-  //   // [
-  //   //   [5, 10],
-  //   //   [14, 21],
-  //   //   [23, 30],
-  //   //   [34, 39],
-  //   // ],
-  //   // [
-  //   //   [4, 9],
-  //   //   [13, 21],
-  //   //   [23, 31],
-  //   //   [35, 40],
-  //   // ],
-  //   // [[2, 7], [11, 15], [18, 21], [23, 26], [29, 33], [37, 42], 44],
-  //   // [[2, 6], [9, 14], [17, 21], [23, 27], [30, 35], [38, 42], 44],
-  //   // [[2, 4], [9, 14], [17, 21], [23, 27], [30, 35], [40, 42], 44],
-  //   // [[2, 3], [7, 13], [16, 21], [23, 28], [31, 37], [41, 42], 44],
-  //   // [],
-  //   // [0, [6, 12], [15, 21], [23, 29], [32, 38], 44],
-  //   // [0, [4, 11], [14, 21], [23, 30], [33, 40], 44],
-  //   // [0, [5, 11], [14, 21], [23, 30], [33, 39], 44],
-  //   // [[5, 10], [13, 21], [23, 31], [34, 39], 44],
-  //   // [
-  //   //   [8, 9],
-  //   //   [12, 21],
-  //   //   [23, 32],
-  //   //   [35, 36],
-  //   // ],
-  //   // [
-  //   //   [13, 21],
-  //   //   [23, 31],
-  //   // ],
-  //   // [
-  //   //   [4, 10],
-  //   //   [35, 41],
-  //   // ],
-  //   // [
-  //   //   [4, 10],
-  //   //   [16, 19],
-  //   //   [25, 28],
-  //   //   [35, 41],
-  //   // ],
-  // ];
-
-  overlayRef!: OverlayRef;
-
-  @ViewChild('overlayTemplate') overlayTemplate!: CdkPortal;
-
-  // @ViewChildren('rows') private rowss!: ElementRef;
-
-  // @ViewChildren('rows') private rows!: QueryList<ElementRef<HTMLElement>>;
-  // @ViewChildren('row', {read: ElementRef}) private row!: QueryList<ElementRef>;
-
-  constructor(private _overlay: Overlay) {}
+    this._zalSeatsWithGaps$.subscribe((seats) => {
+      this.zalSeatsWithGaps = seats;
+      console.log(this.zalSeatsWithGaps);
+      this._cd.markForCheck();
+    });
+  }
 
   ngOnInit(): void {}
 
-  ngAfterViewInit(): void {
-    // console.log(this.row)
-    // console.log(this.rows[0])
+  private _getGap(zalSeat: ZalSeat) {
+    return (
+      gaps.find((i) => i.col === zalSeat.col && i.row === zalSeat.row)?.gap || 0
+    );
   }
 
-  // isSeat(rowIndex: number, seatIndex: number) {
-  //   const rowSeats = this.seats[rowIndex];
-
-  //   return rowSeats?.some((value: number | Array<number>) => {
-  //     if (typeof value === 'number') {
-  //       return seatIndex === value;
-  //     }
-
-  //     return seatIndex >= value[0] && seatIndex <= value[1];
-  //   });
-  // }
-
-  onSeatMouseEnter(rowIndex: number, seatIndex: number) {
-    const res = vru.slice(0).reduce((acc, curr, i, arr) => {
-      let deputy = curr.members?.find(
-        (i) =>
-          rowIndex === +i.seat.split(',')[0] &&
-          seatIndex === +i.seat.split(',')[1]
-      );
-      if (deputy) arr.splice(1);
-      return (acc = {
-        name: deputy?.name,
-        unionType: deputy && curr.type,
-        unionName: deputy && curr.name,
-      });
-    }, {});
-
-    this.seatDetails = JSON.stringify(res);
-
-    // this.openOverlay();
-
-    // console.log(res)
+  getRowSeats(rowIndex: number) {
+    return this.zalSeatsWithGaps.filter((seat) => seat.row === rowIndex + 2);
   }
 
-  // openOverlay(e: MouseEvent) {
-  //   console.log(e);
-  //   const positionStrategy = this._overlay
-  //     .position()
-  //     .flexibleConnectedTo(this.rows);
-  //   const overlayConfig = new OverlayConfig({
-  //     positionStrategy,
-  //   });
-  //   // overlayConfig.hasBackdrop = true;
-  //   this.overlayRef = this._overlay.create(overlayConfig);
-  //   // this.overlayRef.backdropClick().subscribe(() => {
-  //   //   this.overlayRef.dispose();
-  //   // });
-  //   this.overlayRef.attach(this.overlayTemplate);
-
-  //   // const overlayRef = overlay.create();
-  //   // const userProfilePortal = new ComponentPortal(UserProfile);
-  //   // overlayRef.attach(userProfilePortal);
-  // }
-
-  onSeatMouseLeave(rowIndex: number, seatIndex: number) {
-    this.seatDetails = '';
+  counter(i: number) {
+    return new Array(i);
   }
 }

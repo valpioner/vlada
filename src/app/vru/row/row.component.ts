@@ -4,15 +4,7 @@ import {
   Input,
   OnInit,
 } from '@angular/core';
-
-export interface Seat {
-  person?: { name: string };
-  gap?: number;
-}
-
-export interface Row {
-  seats?: Seat[];
-}
+import { ZalSeatWithGap } from 'src/app/shared/models/zal-seat';
 
 @Component({
   selector: 'row',
@@ -21,15 +13,13 @@ export interface Row {
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class RowComponent implements OnInit {
-  @Input() seats!: Seat[] | undefined;
+  @Input() seats?: ZalSeatWithGap[];
 
   constructor() {}
 
-  ngOnInit(): void {
-    console.log('[row] seats: ', this.seats);
-  }
+  ngOnInit(): void {}
 
-  getMarginByGap(seat: Seat) {
+  getMarginByGap(seat: ZalSeatWithGap) {
     if (seat.gap) {
       return seat.gap * 20;
     }
