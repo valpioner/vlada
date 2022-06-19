@@ -2,7 +2,43 @@
   width: 16px;
   height: 20px;
 
-  background-color: #1ae57f;
+  // background-color: #1ae57f;
   border-radius: 3px;
   cursor: pointer;
+}
+
+:host(.poza-fr) {
+  background-color: #878787;
+}
+
+:host(.fr-sluga-narodu) {
+  background-color: #19950b;
+}
+
+:host(.fr-za-zhyttya) {
+  background-color: #0000ff;
+}
+
+:host(.fr-batkivshchyna) {
+  background-color: #ff0000;
+}
+
+:host(.fr-euro-solidarnist) {
+  background-color: #80ff00;
+}
+
+:host(.fr-holos) {
+  background-color: #f97200;
+}
+
+:host(.fr-dovira) {
+  background-color: #1a9daa;
+}
+
+:host(.fr-za-maybutne) {
+  background-color: #a1a724;
+}
+
+:host(.vilne) {
+  background-color: lightgray;
 }

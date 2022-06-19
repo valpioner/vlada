@@ -1,6 +1,7 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { retry, catchError, Observable, throwError } from 'rxjs';
+import { ZalFraction } from '../models/zal-fraction';
 import { ZalSeat } from '../models/zal-seat';
 
 @Injectable({
@@ -22,6 +23,15 @@ export class ApiService {
       this.http
         // .get<ZalSeat[]>(this.apiURL + '/ogd/zal/map/map_zal-skl9.json')
         .get<ZalSeat[]>('assets/map_zal-skl9.json')
+        .pipe(retry(1), catchError(this.handleError))
+    );
+  }
+
+  getZalFractions(): Observable<ZalFraction[]> {
+    return (
+      this.http
+        // .get<ZalSeat[]>(this.apiURL + '/ogd/zal/map/map_zal_fr-skl9.json')
+        .get<ZalFraction[]>('assets/map_zal_fr-skl9.json')
         .pipe(retry(1), catchError(this.handleError))
     );
   }

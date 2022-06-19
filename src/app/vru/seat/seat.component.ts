@@ -4,26 +4,71 @@ import {
   ChangeDetectionStrategy,
   Component,
   ElementRef,
+  HostBinding,
   HostListener,
   Input,
   OnInit,
   ViewChild,
 } from '@angular/core';
-import { ZalSeat } from 'src/app/shared/models/zal-seat';
+import { ZalSeat, ZalSeatWithGap } from 'src/app/shared/models/zal-seat';
 
 @Component({
   selector: 'seat',
   templateUrl: './seat.component.html',
   styleUrls: ['./seat.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
+  // host: {
+  //   '[class.sluga-narodu]': 'someField',
+  // },
 })
 export class SeatComponent implements OnInit {
   overlayRef: OverlayRef | null = null;
 
   @Input()
-  seat?: ZalSeat;
+  seat?: ZalSeatWithGap;
 
   @ViewChild('overlayTemplate') overlayTemplate!: CdkPortal;
+
+  @HostBinding('class') get class() {
+    if (
+      !this.seat?.id_fr &&
+      !this.seat?.id_mp &&
+      this.seat?.title === 'Вільне місце'
+    ) {
+      return 'vilne';
+    }
+
+    switch (this.seat?.id_fr) {
+      case 0:
+        return 'poza-fr';
+        break;
+      case 1:
+        return 'fr-sluga-narodu';
+        break;
+      case 2:
+        return 'fr-za-zhyttya';
+        break;
+      case 3:
+        return 'fr-batkivshchyna';
+        break;
+      case 4:
+        return 'fr-euro-solidarnist';
+        break;
+      case 5:
+        return 'fr-holos';
+        break;
+      case 7:
+        return 'fr-dovira';
+        break;
+      case 8:
+        return 'fr-za-maybutne';
+        break;
+
+      default:
+        return '';
+        break;
+    }
+  }
 
   constructor(private _overlay: Overlay, private _elementRef: ElementRef) {}
 
