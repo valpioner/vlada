@@ -13,20 +13,28 @@ const routes: Routes = [
   {
     path: '',
     redirectTo: '/vru',
-    pathMatch: 'full'
+    pathMatch: 'full',
   },
   {
-    path: 'vru',
-    loadChildren: () => import('./vru/vru.module').then(m => m.VruModule)
+    path: 'person',
+    loadChildren: () =>
+      import('./person/person.module').then((m) => m.PersonModule),
     // component: VruComponent,
     // canActivate: [AuthGuard],
     // data: { roles: [Role.Admin] }
   },
-  { path: '**', redirectTo: '' }
+  {
+    path: 'vru',
+    loadChildren: () => import('./vru/vru.module').then((m) => m.VruModule),
+    // component: VruComponent,
+    // canActivate: [AuthGuard],
+    // data: { roles: [Role.Admin] }
+  },
+  { path: '**', redirectTo: '' },
 ];
 
 @NgModule({
   imports: [RouterModule.forRoot(routes)],
-  exports: [RouterModule]
+  exports: [RouterModule],
 })
-export class AppRoutingModule { }
+export class AppRoutingModule {}

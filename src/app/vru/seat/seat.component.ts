@@ -10,7 +10,10 @@ import {
   OnInit,
   ViewChild,
 } from '@angular/core';
-import { ZalSeat, ZalSeatWithGap } from 'src/app/shared/models/zal-seat';
+import {
+  ZalSeat,
+  ZalSeatWithGap,
+} from 'src/app/shared/models/open-data/zal-seat';
 
 @Component({
   selector: 'seat',

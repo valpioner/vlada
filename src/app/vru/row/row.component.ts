@@ -4,7 +4,7 @@ import {
   Input,
   OnInit,
 } from '@angular/core';
-import { ZalSeatWithGap } from 'src/app/shared/models/zal-seat';
+import { ZalSeatWithGap } from 'src/app/shared/models/open-data/zal-seat';
 
 @Component({
   selector: 'row',

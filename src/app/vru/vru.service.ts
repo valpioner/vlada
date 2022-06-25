@@ -2,8 +2,8 @@ import { Injectable } from '@angular/core';
 
 import { Observable } from 'rxjs';
 import { map, take } from 'rxjs/operators';
-import { ZalFraction } from '../shared/models/zal-fraction';
-import { ZalSeat, ZalSeatWithGap } from '../shared/models/zal-seat';
+import { ZalFraction } from '../shared/models/open-data/zal-fraction';
+import { ZalSeat, ZalSeatWithGap } from '../shared/models/open-data/zal-seat';
 
 import { ApiService } from '../shared/services/api.service';
 

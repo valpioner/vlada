@@ -1,8 +1,8 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { retry, catchError, Observable, throwError } from 'rxjs';
-import { ZalFraction } from '../models/zal-fraction';
-import { ZalSeat } from '../models/zal-seat';
+import { ZalFraction } from '../models/open-data/zal-fraction';
+import { ZalSeat } from '../models/open-data/zal-seat';
 
 @Injectable({
   providedIn: 'root',

@@ -5,7 +5,7 @@ import {
   OnInit,
 } from '@angular/core';
 
-import { ZalSeatWithGap } from '../shared/models/zal-seat';
+import { ZalSeatWithGap } from '../shared/models/open-data/zal-seat';
 import { VruService } from './vru.service';
 
 @Component({
