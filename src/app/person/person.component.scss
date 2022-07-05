@@ -1,0 +1,59 @@
+.person {
+  margin: 50px auto;
+  width: 80%;
+  max-width: 1024px;
+  //   border: 1px dotted lightgrey;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+
+  .photo {
+    border: 1px dotted lightblue;
+    border-radius: 999px;
+    width: 200px;
+    height: 200px;
+    min-width: 200px;
+    background-color: lightblue;
+    background-image: linear-gradient(#adcded, #e8f4fc);
+    object-fit: contain;
+    overflow: auto;
+
+    .img {
+      display: block;
+      margin: 0 auto;
+    }
+  }
+
+  .info {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+
+    .name {
+      font-size: 32px;
+      font-weight: 700;
+      line-height: 38px;
+      margin-top: 30px;
+    }
+
+    .occupation {
+      font-size: 17px;
+      line-height: 38px;
+    }
+
+    .badge {
+      border: 2px solid orange;
+      border-radius: 20px;
+      width: fit-content;
+      padding: 3px;
+    }
+
+    .tabs {
+      margin-top: 30px;
+
+      .tab-content {
+        margin: 30px 0;
+      }
+    }
+  }
+}

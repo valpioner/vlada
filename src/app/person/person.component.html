@@ -1,1 +1,44 @@
-<p>person works!</p>
+<div class="person">
+  <!-- <div class="header"> -->
+  <div class="photo">
+    <img
+      *ngIf="photo$ | async as photo"
+      src="../../assets/mps-foto/{{ photo }}.jpg"
+      alt="{{ fullName }}"
+      id="{{ fullName }}"
+      class="img"
+    />
+  </div>
+
+  <div class="info">
+    <div class="name">
+      {{ fullName }}
+    </div>
+    <div class="occupation">Депутат ВРУ</div>
+
+    <div class="tabs">
+      <mat-tab-group>
+        <mat-tab label="Погляди">
+          <div class="tab-content">Content 1</div>
+        </mat-tab>
+
+        <mat-tab label="Медіа">
+          <div class="tab-content">Content 1</div>
+        </mat-tab>
+
+        <mat-tab label="Біографія">
+          <div class="tab-content">Content 1</div>
+        </mat-tab>
+
+        <mat-tab label="Декларації">
+          <div class="tab-content">Content 1</div>
+        </mat-tab>
+
+        <mat-tab label="ВРУ">
+          <div class="tab-content">Content 1</div>
+        </mat-tab>
+      </mat-tab-group>
+    </div>
+  </div>
+  <!-- </div> -->
+</div>

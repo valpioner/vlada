@@ -130,7 +130,7 @@ export class VruService {
   }
 
   getZalFractions(): Observable<ZalFraction[]> {
-    return this._api.getZalFractions().pipe(take(1));
+    return this._api.getZalFractions();
   }
 
   private _getGap(zalSeat: ZalSeat) {
