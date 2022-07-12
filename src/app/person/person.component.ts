@@ -25,7 +25,8 @@ export class PersonComponent implements OnInit {
   constructor(private _api: ApiService) {
     this._api.getMpsData().subscribe((mpsData: MpsData) => {
       this.mpsData = mpsData;
-      // console.log(this.mpData.mps[0]);
+      // console.log(this.mpsData);
+      // console.log(this.mpsData.mps[0]);
       this.person = this.mpsData?.mps[0];
 
       this.getPersonPhoto();
