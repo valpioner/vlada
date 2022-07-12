@@ -25,7 +25,15 @@ export class PersonComponent implements OnInit {
   constructor(private _api: ApiService) {
     this._api.getMpsData().subscribe((mpsData: MpsData) => {
       this.mpsData = mpsData;
-      // console.log(this.mpsData);
+      // console.log(mpsData);
+      // let temp = mpsData.mps.map((mp) => ({
+      //   gender: mp.gender,
+      //   surname: mp.surname,
+      //   firstname: mp.firstname,
+      //   patronymic: mp.patronymic,
+      //   birthday: mp.birthday,
+      // }));
+      // console.log(temp);
       // console.log(this.mpsData.mps[0]);
       this.person = this.mpsData?.mps[0];
 
